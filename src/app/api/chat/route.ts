@@ -4,18 +4,17 @@ import { NextRequest, NextResponse } from "next/server";
 import { Persona } from "@/types";
 
 const personas: Record<string, Persona> = {
-  hitesh: hiteshPersona,
-  piyush: piyushPersona,
+  "hitesh-choudhary": hiteshPersona,
+  "piyush-garg": piyushPersona,
 };
 
 export async function POST(req: NextRequest) {
   try {
-    const { messages, userApiKey, sessionData, personaKey } = await req.json();
-    console.log(messages, userApiKey, sessionData);
+    const { messages, userApiKey, personaId } = await req.json();
 
     //persona's
 
-    const selectedPersona = personas[personaKey] || personas["hitesh"];
+    const selectedPersona = personas[personaId];
 
     if (!selectedPersona) {
       return NextResponse.json({ error: "Persona not found" }, { status: 404 });
