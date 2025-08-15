@@ -57,10 +57,11 @@ export default function ChatInterface({
 
     const userMessage: ChatMessage = {
       role: "user",
-      content: input,
+      content: input.trim(),
       timestamp: new Date(),
     };
     setMessages((prev) => [...prev, userMessage]);
+
     setInput("");
     setIsLoading(true);
     setShouldAutoScroll(true);
@@ -82,24 +83,53 @@ export default function ChatInterface({
         }),
       });
 
-      const data = await response.json();
-
       if (!response.ok) {
-        if (data.limitReached) {
-          setShowApiKeyInput(true);
-          return;
-        }
-        throw new Error(data.error || "Failed to send message");
+        let msg = "Failed to send message";
+        try {
+          const data = await response.json();
+          if (data?.limitReached) {
+            setShowApiKeyInput(true);
+            return;
+          }
+          msg = data?.error || msg;
+        } catch {}
+        throw new Error(msg);
       }
 
-      const assistantMessage: ChatMessage = {
-        role: "assistant",
-        content: data.message,
-        timestamp: new Date(),
-      };
+      if (!response.body) throw new Error("No response body (stream missing).");
 
-      setMessages((prev) => [...prev, assistantMessage]);
-      setShouldAutoScroll(true);
+      // Step 2: Add empty assistant message
+      setMessages((prev) => [
+        ...prev,
+        { role: "assistant", content: "", timestamp: new Date() },
+      ]);
+
+      //Stream chunks into the last assistant message
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder();
+
+      while (true) {
+        const { value, done } = await reader.read();
+
+        if (done) break;
+
+        const chunk = decoder.decode(value, { stream: true });
+
+        setMessages((prev) => {
+          //update last message
+          const updated = [...prev];
+          const lastIndex = updated.length - 1;
+
+          //ensure that data is appending to assistant bubble
+          if (updated[lastIndex]?.role !== "assistant") return prev;
+          updated[lastIndex] = {
+            ...updated[lastIndex],
+            content: updated[lastIndex].content + chunk,
+          };
+          return updated;
+        });
+        setShouldAutoScroll(true);
+      }
 
       // Update session message count
       const updatedSession = ChatLimitManager.incrementMessageCount();
@@ -276,7 +306,7 @@ export default function ChatInterface({
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              onKeyDown={(e) => {
+              /* onKeyDown={(e) => {
                 if (e.key === "Enter") {
                   e.preventDefault();
                   e.stopPropagation();
@@ -284,7 +314,7 @@ export default function ChatInterface({
                     sendMessage();
                   }
                 }
-              }}
+              }} */
               placeholder={
                 ChatLimitManager.hasReachedLimit()
                   ? "Add your API key to continue chatting..."

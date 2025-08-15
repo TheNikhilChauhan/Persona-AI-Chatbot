@@ -1,6 +1,6 @@
 // Chat limit constants and utilities
 export const CHAT_LIMITS = {
-  FREE_MESSAGES: 5, // Number of free messages per session
+  FREE_MESSAGES: 20, // Number of free messages per session
   WARNING_THRESHOLD: 1, // Show warning after this many messages
 } as const;
 

@@ -33,24 +33,38 @@ export async function POST(req: NextRequest) {
       ...messages,
     ];
 
+    //stream
     const response = await client.chat.completions.create({
       model: process.env.Gemini_model || "gpt-4o-mini",
       messages: chatMessages,
       max_tokens: 500,
+      stream: true,
     });
 
-    const content = response.choices[0]?.message?.content;
+    const encoder = new TextEncoder();
 
-    if (!content) {
-      return NextResponse.json(
-        {
-          error: "No response genereated",
-        },
-        { status: 500 }
-      );
-    }
-    return NextResponse.json({
-      message: content,
+    const stream = new ReadableStream({
+      async start(controller) {
+        try {
+          for await (const chunk of response) {
+            const contents = chunk?.choices[0]?.delta?.content || "";
+            if (contents) {
+              controller.enqueue(encoder.encode(contents));
+            }
+          }
+        } catch (error) {
+          controller.error(error);
+        } finally {
+          controller.close();
+        }
+      },
+    });
+
+    return new Response(stream, {
+      headers: {
+        "Content-Type": "text/plain; charset=utf-8",
+        "Cache-Control": "no-cache",
+      },
     });
   } catch (error) {
     console.error("Chat API error", error);
