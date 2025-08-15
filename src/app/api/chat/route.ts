@@ -1,11 +1,16 @@
 import OpenAI from "openai";
-import { hiteshPersona, piyushPersona } from "@/app/persona/persona";
+import {
+  hiteshPersona,
+  piyushPersona,
+  sherlockPersona,
+} from "@/app/persona/persona";
 import { NextRequest, NextResponse } from "next/server";
 import { Persona } from "@/types";
 
 const personas: Record<string, Persona> = {
   "hitesh-choudhary": hiteshPersona,
   "piyush-garg": piyushPersona,
+  "sherlock-holmes": sherlockPersona,
 };
 
 export async function POST(req: NextRequest) {
