@@ -5,6 +5,8 @@ import Link from "next/link";
 import { useState } from "react";
 import { ExternalLink, Star } from "lucide-react";
 
+import Image from "next/image";
+
 interface ProjectCardProps {
   project: Project;
 }
@@ -17,18 +19,20 @@ export default function ProjectCard({ project }: ProjectCardProps) {
       {/* Project Image */}
       <div className="relative h-48 bg-gradient-to-br from-gray-800 to-gray-900 rounded-t-xl overflow-hidden">
         {!imageError ? (
-          <img
+          <Image
             src={project.image}
             alt={project.title}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+            width={300}
+            height={400}
+            className="w-full h-full object-cover  rounded-xl transition-transform duration-300 group-hover:scale-105"
             onError={() => setImageError(true)}
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center text-gray-400">
-            <div className="text-center">
-              <div className="text-4xl mb-2">🤖</div>
-              <p className="text-sm opacity-80">{project.category}</p>
-            </div>
+          <div className="w-full h-full flex flex-col items-center justify-center rounded-xl bg-gray-100 text-gray-500 p-4">
+            <span className="text-5xl mb-2">🤖</span>
+            <p className="text-sm font-medium">
+              {project.category || "AI Persona"}
+            </p>
           </div>
         )}
 
@@ -74,12 +78,6 @@ export default function ProjectCard({ project }: ProjectCardProps) {
               <ExternalLink size={14} />
               <span>Try Demo</span>
             </Link>
-          )}
-
-          {!project.demoUrl && (
-            <div className="flex-1 bg-gray-800 text-gray-500 text-center py-2 px-4 rounded-lg font-medium border border-gray-700">
-              Coming Soon
-            </div>
           )}
         </div>
       </div>

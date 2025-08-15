@@ -5,17 +5,20 @@ import { ChatMessage } from "@/types";
 import { ChatLimitManager } from "@/utils/chatLimiter";
 import ApiKeyInput from "./apiKeyWindow";
 import { Send, RotateCcw, AlertTriangle, Shield } from "lucide-react";
+import Image from "next/image";
 
 interface ChatInterfaceProps {
   personaName: string;
   personaDescription: string;
   personaId: string;
+  avatar: string;
 }
 
 export default function ChatInterface({
   personaName,
   personaDescription,
   personaId,
+  avatar,
 }: ChatInterfaceProps) {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
@@ -138,10 +141,11 @@ export default function ChatInterface({
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-gray-800 flex-shrink-0">
           <div className="flex items-center space-x-3">
-            {/* Hitesh's GitHub Profile Picture */}
-            <img
-              src="https://avatars.githubusercontent.com/u/11613311?v=4"
-              alt="Hitesh Choudhary"
+            <Image
+              src={avatar}
+              alt={personaName}
+              height={40}
+              width={40}
               className="w-10 h-10 rounded-full border-2 border-gray-700"
             />
             <div>
