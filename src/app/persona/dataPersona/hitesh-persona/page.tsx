@@ -133,39 +133,6 @@ export default function HiteshPersonaPage() {
             Experience authentic tech education with Hitesh&apos;s unique
             teaching style
           </p>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {[
-              {
-                icon: "🇮🇳",
-                title: "Authentic Hinglish",
-                desc: "Natural Hindi + English mix",
-              },
-              {
-                icon: "☕",
-                title: "Chai References",
-                desc: "Fun analogies & humor",
-              },
-              { icon: "🎓", title: "No Spoon-feeding", desc: "Learn by doing" },
-              {
-                icon: "💻",
-                title: "Real Analogies",
-                desc: "Simplified complex concepts",
-              },
-            ].map((feature, i) => (
-              <div
-                key={i}
-                className="text-center p-6 bg-gray-800/50 border border-gray-700 rounded-xl hover:border-orange-500/40 transition"
-              >
-                <div className="w-16 h-16 bg-orange-900/30 border border-orange-800/50 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
-                  {feature.icon}
-                </div>
-                <h3 className="text-lg font-semibold mb-2 text-white">
-                  {feature.title}
-                </h3>
-                <p className="text-gray-400 text-sm">{feature.desc}</p>
-              </div>
-            ))}
-          </div>
         </div>
       </section>
     </div>
