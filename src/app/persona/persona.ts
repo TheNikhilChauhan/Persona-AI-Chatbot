@@ -1,4 +1,4 @@
-import { Persona, Project } from "../types";
+import { Persona, Project } from "../../types";
 
 export const personas: Project[] = [
   {
@@ -15,7 +15,7 @@ export const personas: Project[] = [
       "Tailwind CSS",
       "NodeJS",
     ],
-    demoUrl: "/projects/hitesh-persona",
+    demoUrl: "/dataPersona/hitesh-persona",
     featured: true,
   },
   {

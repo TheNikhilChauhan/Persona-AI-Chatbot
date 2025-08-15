@@ -1,7 +1,7 @@
 import OpenAI from "openai";
 import { hiteshPersona, piyushPersona } from "@/app/persona/persona";
 import { NextRequest, NextResponse } from "next/server";
-import { Persona } from "@/app/types";
+import { Persona } from "@/types";
 
 const personas: Record<string, Persona> = {
   hitesh: hiteshPersona,

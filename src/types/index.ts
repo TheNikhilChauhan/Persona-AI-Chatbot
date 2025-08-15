@@ -22,3 +22,9 @@ export interface PersonaExample {
   user: string;
   assistant: string;
 }
+
+export interface ChatMessage {
+  role: "user" | "system" | "assistant";
+  content: string;
+  timestamp?: Date;
+}
