@@ -16,6 +16,7 @@ export async function POST(req: NextRequest) {
     }
     const client = new OpenAI({
       apiKey: process.env.Gemini_API,
+      baseURL: process.env.Gemini_baseUrl,
     });
 
     try {
