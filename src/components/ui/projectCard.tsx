@@ -76,7 +76,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
               className="flex-1 bg-white text-black hover:bg-gray-200 text-center py-2 px-4 rounded-lg font-medium transition-colors inline-flex items-center justify-center space-x-2"
             >
               <ExternalLink size={14} />
-              <span>Try Demo</span>
+              <span>Chat with AI </span>
             </Link>
           )}
         </div>
