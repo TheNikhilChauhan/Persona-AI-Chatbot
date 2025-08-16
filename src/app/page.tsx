@@ -1,4 +1,5 @@
 "use client";
+
 import ProjectCard from "@/components/ui/projectCard";
 import React from "react";
 import { personas } from "./persona/persona";
@@ -7,28 +8,104 @@ const HomePage = () => {
   const featuredProjects = personas.filter((project) => project.featured);
 
   return (
-    <div className="p-8">
-      {/* Header */}
-      <div className="mb-8 text-center">
-        <h1 className="text-4xl font-bold text-gray-400">Persona AI Chat</h1>
-        <p className="text-gray-200 mt-2">
-          Explore AI chat personas like Hitesh Choudhary, Piyush Garg, and more.
-          Pick your AI guide and start a conversation.
-        </p>
+    <main className="relative min-h-screen overflow-hidden bg-black">
+      {/* Cyberpunk Background */}
+      <div className="pointer-events-none absolute inset-0">
+        {/* Neon Grid */}
+        <div
+          className="absolute inset-0 opacity-20"
+          style={{
+            backgroundImage: `
+              linear-gradient(90deg, #00ff88 1px, transparent 1px),
+              linear-gradient(0deg, #00ff88 1px, transparent 1px)
+            `,
+            backgroundSize: "50px 50px",
+          }}
+        />
+
+        {/* Scanning Lines */}
+        <div className="absolute inset-0">
+          <div
+            className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-cyan-400 to-transparent animate-pulse"
+            style={{ animationDuration: "3s" }}
+          />
+          <div
+            className="absolute top-1/4 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-purple-400 to-transparent animate-pulse"
+            style={{ animationDuration: "4s", animationDelay: "1s" }}
+          />
+          <div
+            className="absolute top-1/2 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-pink-400 to-transparent animate-pulse"
+            style={{ animationDuration: "5s", animationDelay: "2s" }}
+          />
+          <div
+            className="absolute top-3/4 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-yellow-400 to-transparent animate-pulse"
+            style={{ animationDuration: "3.5s", animationDelay: "0.5s" }}
+          />
+        </div>
+
+        {/* Holographic Orbs */}
+        <div
+          className="absolute top-20 left-20 w-32 h-32 bg-cyan-400 rounded-full opacity-30 animate-ping"
+          style={{ animationDuration: "4s" }}
+        />
+        <div
+          className="absolute top-40 right-32 w-24 h-24 bg-purple-400 rounded-full opacity-40 animate-ping"
+          style={{ animationDuration: "3s", animationDelay: "1s" }}
+        />
+        <div
+          className="absolute bottom-32 left-1/3 w-28 h-28 bg-pink-400 rounded-full opacity-35 animate-ping"
+          style={{ animationDuration: "5s", animationDelay: "2s" }}
+        />
+
+        {/* Data Streams */}
+        <div className="absolute inset-0">
+          {[...Array(15)].map((_, i) => (
+            <div
+              key={i}
+              className="absolute w-0.5 h-20 bg-gradient-to-b from-cyan-400 to-transparent animate-pulse"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                animationDelay: `${Math.random() * 3}s`,
+                animationDuration: `${2 + Math.random() * 2}s`,
+              }}
+            />
+          ))}
+        </div>
+
+        {/* Corner Brackets */}
+        <div className="absolute top-8 left-8 w-16 h-16 border-l-2 border-t-2 border-cyan-400" />
+        <div className="absolute top-8 right-8 w-16 h-16 border-r-2 border-t-2 border-purple-400" />
+        <div className="absolute bottom-8 left-8 w-16 h-16 border-l-2 border-b-2 border-pink-400" />
+        <div className="absolute bottom-8 right-8 w-16 h-16 border-r-2 border-b-2 border-yellow-400" />
       </div>
 
-      {/* Card Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {featuredProjects.map((project) => (
-          <div
-            key={project.id}
-            className="rounded-2xl shadow-lg border border-gray-600 bg-gray-400 hover:shadow-xl transition-shadow p-4"
-          >
-            <ProjectCard project={project} />
-          </div>
-        ))}
+      {/* Main Content */}
+      <div className="relative z-10 p-8">
+        {/* Header */}
+        <div className="mb-8 text-center">
+          <h1 className="text-5xl font-extrabold bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+            Persona AI Chat
+          </h1>
+          <p className="text-gray-300 mt-4 text-lg">
+            Explore AI chat personas like Hitesh Choudhary, Piyush Garg, and
+            more. Pick your AI guide and start a conversation.
+          </p>
+        </div>
+
+        {/* Card Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {featuredProjects.map((project) => (
+            <div
+              key={project.id}
+              className="rounded-2xl shadow-lg border border-cyan-500/40 bg-gray-900/70 backdrop-blur-xl hover:shadow-cyan-400/50 transition-shadow p-4"
+            >
+              <ProjectCard project={project} />
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
+    </main>
   );
 };
 
